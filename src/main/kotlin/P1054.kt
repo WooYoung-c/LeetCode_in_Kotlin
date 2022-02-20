@@ -1,44 +1,30 @@
-class P1054 {
-    data class Node(var num: Int, var count: Int) : Comparable<Node> {
-        override fun compareTo(other: Node): Int {
-            return when {
-                this.count < other.count -> 1
-                this.count > other.count -> -1
-                else -> 0
-            }
-        }
-    }
+import java.lang.Integer.max
 
+class P1054 {
+    // failed to solve
+    // referenced from discussion
     companion object {
         fun rearrangeBarcodes(barcodes: IntArray): IntArray {
-            val ans = IntArray(barcodes.size)
-            val forCount = IntArray(10001)
-            val arrayList = ArrayList<Node>()
+            val count = IntArray(10001)
+            var maxCnt = 0
+            var maxBarcode = 0
+            var pos = 0
 
-            for (i in barcodes.indices) {
-                forCount[barcodes[i]]++
+            for (barcode in barcodes) {
+                maxCnt = max(maxCnt, ++count[barcode])
+                maxBarcode = if (maxCnt == count[barcode]) barcode else maxBarcode
             }
 
-            for (i in forCount.indices) {
-                if (forCount[i] != 0) {
-                    arrayList.add(Node(i, forCount[i]))
+            for (barcode in 0..10000) {
+                val curBarcode = if (barcode == 0) maxBarcode else barcode
+
+                while (count[curBarcode]-- > 0) {
+                    barcodes[pos] = curBarcode
+                    pos = if (pos + 2 < barcodes.size) pos + 2 else 1
                 }
             }
 
-            var ansIdx = 0
-
-            while (ansIdx != ans.size) {
-                for (i in arrayList.indices) {
-                    val curNode = arrayList[i]
-
-                    if (curNode.count == 0) continue
-
-                    ans[ansIdx++] = curNode.num
-                    curNode.count--
-                }
-            }
-
-            return ans
+            return barcodes
         }
     }
 }
