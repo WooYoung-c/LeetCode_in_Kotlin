@@ -1,7 +1,5 @@
 fun main() {
-    val check = "aab"
-    val list = P131().partition(check)
-    for (palindromes in list) {
-        for (palindrome in palindromes) print("$palindrome, ")
-    }
+    val list = intArrayOf(1, 2, 3, 1)
+    val p198IterativeDpBottomUp = P198_Iterative_Dp_Bottom_up()
+    println(p198IterativeDpBottomUp.rob(list))
 }
