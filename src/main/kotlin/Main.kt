@@ -1,5 +1,5 @@
 fun main() {
-    val list = intArrayOf(1, 2, 3, 1)
-    val p198IterativeDpBottomUp = P198_Iterative_Dp_Bottom_up()
-    println(p198IterativeDpBottomUp.rob(list))
+    val nums = intArrayOf(4, 2, 1)
+    val p665 = P665()
+    println(p665.checkPossibility(nums))
 }
