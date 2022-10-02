@@ -1,5 +1,5 @@
-fun main() {
-    val nums = intArrayOf(4, 2, 1)
-    val p665 = P665()
-    println(p665.checkPossibility(nums))
+fun main(args: Array<String>) {
+    println("Hello World!")
+    // Try adding program arguments via Run/Debug configuration.
+    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
 }
