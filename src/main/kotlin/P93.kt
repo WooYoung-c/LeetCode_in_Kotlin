@@ -1,35 +1,35 @@
 class P93 {
-    // referred to discussion
-    private val answer: ArrayList<String> = ArrayList()
-
-    fun restoreIpAddresses(s: String): List<String> {
-        checkPointCanBeLocated(s, "", 0)
-        return answer
-    }
-
-    private fun checkPointCanBeLocated(s: String, restored: String, pointCount: Int) {
-
-        if (s.isEmpty() || pointCount == 4) {
-            if (s.isEmpty() && pointCount == 4) answer.add(restored.substring(1))
-            return
+    companion object {
+        fun restoreIpAddresses(s: String): List<String> {
+            val answer = ArrayList<String>()
+            return answer
         }
 
-        for (i in 1..3) {
-            if (i > s.length) break
+        fun backTracking(s: String, ip: String, checked: Int, answer: ArrayList<String>) {
+            if (checked == 4) {
+                answer.add(ip)
+                return
+            }
 
-            val ip = s.substring(0, i)
-
-            if (checkIfIpIsValid(ip)) {
-                checkPointCanBeLocated(s.substring(i), "$restored.$ip", pointCount + 1)
-                if (checkIfIPIsZero(ip)) break
+            for (checkToIndex in 0..2) {
+                val checkString = s.substring(0, checkToIndex)
+                if (checkString == "0") {
+                    val nextIp = ip.apply {
+                        if (this.isEmpty()) this.plus(checkString)
+                        else this.plus(".$checkString")
+                    }
+                    backTracking(s.substring(checkToIndex + 1, s.length - 1), nextIp, checked + 1, answer)
+                    return
+                } else {
+                    if (checkString.toInt() in 0..255) {
+                        val nextIp = ip.apply {
+                            if (this.isEmpty()) this.plus(checkString)
+                            else this.plus(".$checkString")
+                        }
+                        backTracking(s.substring(checkToIndex + 1, s.length - 1), nextIp, checked + 1, answer)
+                    }
+                }
             }
         }
-    }
-
-    private fun checkIfIPIsZero(ip: String) = ip == "0"
-
-    private fun checkIfIpIsValid(ip: String) = when {
-        ip.toInt() in 0..255 -> true
-        else -> false
     }
 }
